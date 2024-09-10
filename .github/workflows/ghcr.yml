@@ -1,7 +1,7 @@
 name: Build & publish containers
 on:
   push:
-    branches: [ "main" ]
+    # branches: [ "main" ]
     tags: [ "v*.*.*" ]
 
   release:
@@ -89,7 +89,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: false # ${{ github.event_name != 'pull_request' }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
