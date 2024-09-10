@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set tag
         run: echo "GIT_TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
@@ -40,9 +42,12 @@ jobs:
         # run: 'if [ -z $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} "${{ matrix.context }}/VERSION.txt") ]; then echo "IS_CHANGED=false" >> "$GITHUB_ENV" ; else echo "IS_CHANGED=true" >> "$GITHUB_ENV" ; fi'
         run: echo "IS_CHANGED=true" >> "$GITHUB_ENV"
 
+      - name: ls
+        # run: 'if [ -z $(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} "${{ matrix.context }}/VERSION.txt") ]; then echo "IS_CHANGED=false" >> "$GITHUB_ENV" ; else echo "IS_CHANGED=true" >> "$GITHUB_ENV" ; fi'
+        run: ls -lah .
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        if: env.IS_CHANGED == 'true'
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
