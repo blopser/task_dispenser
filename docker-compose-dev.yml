@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - SYS_REQUIREMENTS=curl redis make
+    volumes:
+      - $PWD/var/home:/home/user
+      - $PWD/:/home/user/app
+    command: sleep 100000000
+    x-podman.uidmaps: ["0:1:1", "${UID:-1000}:0:1"]
+    x-podman.gidmaps: ["0:1:1", "${UID:-1000}:0:1"]
+
+x-podman: {in-pod: false}

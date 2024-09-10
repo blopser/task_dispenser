@@ -1,0 +1,72 @@
+[project]
+name = "task-dispenser"
+version = "0.0.1"
+license = {text = "MIT License"}
+dependencies = [
+  "redis"
+]
+
+[project.optional-dependencies]
+dev = [
+    "celery",
+    "pytest",
+    "pytest-cov",
+    "pytest-mypy",
+    "pytest-pylint",
+    "sphinx",
+    "sphinx-autodoc-typehints",
+    "sphinx-rtd-theme",
+    "sphinx-argparse",
+    "myst-parser",
+    "types-redis",
+    "watchdog",
+    "celery-types",
+]
+
+[project.scripts]
+task-dispenser = "task_dispenser.main:main"
+
+[build-system]
+requires = ["setuptools >= 65.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["task_dispenser"]
+
+[tool.mypy]
+exclude = "venv"
+strict = true
+warn_unreachable = true
+disable_error_code = "attr-defined"
+
+[tool.pytest.ini_options]
+log_cli = false
+# log_cli = true
+log_cli_level = "INFO"
+# log_cli_level = "DEBUG"
+disable_test_id_escaping_and_forfeit_all_rights_to_community_support = true
+addopts = [
+    # "-n", "2",
+    # "--pylint",
+    "--mypy",
+    "--doctest-modules",
+    "--cov=task_dispenser", "--cov=tests", "--cov=examples", "--cov-report=html", "--no-cov-on-fail",
+    # "--full-trace",
+    # "-k", "test_procs_number",
+    # "-k", "task_dispenser",
+    # "-vv",
+]
+testpaths = [
+    "tests",
+    "task_dispenser",
+    "examples",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:pylint*",
+    "ignore::DeprecationWarning:pytest_pylint*",
+]
+
+[tool.coverage.run]
+concurrency = ["multiprocessing"]
+parallel = true
+sigterm = true
