@@ -17,7 +17,7 @@ Or clone the repository of this project and build it manually:
 
 .. code-block:: console
 
-   $ git clone ...
+   $ git clone https://github.com/blopser/task_dispenser.git
    $ cd task_dispenser
    $ docker build . -t task-dispenser
    $ docker run \
@@ -41,6 +41,4 @@ If, for some reason, pip won't work, you can manually download the Task dispense
 
 .. code-block:: console
 
-   $ git clone ...
-   $ cd task_dispenser
-   $ python -m pip install .
+   $ python -m pip install task_dispenser@git+https://github.com/blopser/task_dispenser

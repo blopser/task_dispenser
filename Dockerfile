@@ -40,4 +40,11 @@ ENV PYTHONUNBUFFERED=1 \
 
 COPY ./scripts/docker_start.sh /etc/start.sh
 
+# COPY --chown=$USER_ID:$GROUP_ID ./task_dispenser /home/$UNAME/task_dispenser/task_dispenser
+# COPY --chown=$USER_ID:$GROUP_ID ./pyproject.toml /home/$UNAME/task_dispenser/pyproject.toml
+# RUN set -ex \
+#     && python -m venv $VIRTUAL_ENV \
+#     && $VIRTUAL_ENV/bin/python -m pip install $HOME/task_dispenser celery \
+#     && rm -rf /home/$UNAME/task_dispenser \
+
 ENTRYPOINT ["/bin/bash", "/etc/start.sh"]

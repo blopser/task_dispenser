@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - SYS_REQUIREMENTS=curl redis make git
+        - BASE_IMAGE=alpine
+    environment:
+      - PIP_REQUIREMENTS=task_dispenser@git+https://github.com/blopser/task_dispenser
+    command: >
+      task-dispenser start
+      -t q1 print
+      -t q2 task_dispenser.utils:failed_task
+      -t q3 examples/simple_task.py:task_func
+      --redis-start --procs-number 2 --on-error=log --batch-size=3 --log-level=debug
+    volumes:
+      - $PWD/example_venv:/home/user/app/venv
+      - $PWD/examples:/home/user/app/examples
+    x-podman.uidmaps: ["0:1:1", "${UID:-1000}:0:1"]
+    x-podman.gidmaps: ["0:1:1", "${UID:-1000}:0:1"]
+
+x-podman: {in-pod: false}
