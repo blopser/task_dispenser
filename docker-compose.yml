@@ -1,12 +1,7 @@
 version: '3.8'
 services:
   dev:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      args:
-        - SYS_REQUIREMENTS=redis git
-        - BASE_IMAGE=alpine
+    image: ghcr.io/blopser/task_dispenser:v0.0.3
     environment:
       - PIP_REQUIREMENTS=task_dispenser@git+https://github.com/blopser/task_dispenser
     command: >
