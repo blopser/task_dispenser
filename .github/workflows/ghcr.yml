@@ -24,6 +24,7 @@ jobs:
           - tags: 3.12-alpine 3-alpine alpine
             build_args: |
               BASE_IMAGE=3.12.5-alpine3.20
+            is_latest: true
 
     permissions:
       contents: read
@@ -86,8 +87,8 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: ${{ matrix.context }}
-          file: ${{ matrix.context }}/Dockerfile
+          context: .
+          file: ./Dockerfile
           push: false # ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.tags }}
           labels: ${{ steps.meta.outputs.labels }}
