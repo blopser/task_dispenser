@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
       args:
-        - SYS_REQUIREMENTS=curl redis make git
+        - SYS_REQUIREMENTS=redis git
         - BASE_IMAGE=alpine
     environment:
       - PIP_REQUIREMENTS=task_dispenser@git+https://github.com/blopser/task_dispenser
