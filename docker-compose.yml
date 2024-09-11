@@ -1,18 +1,28 @@
 version: '3.8'
 services:
+  redis:
+    image: docker.io/library/redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass pass --port 6379
+    volumes: 
+      - ./var/redis:/data
+
   dev:
-    image: ghcr.io/blopser/task_dispenser:v0.0.3
+    image: ghcr.io/blopser/task_dispenser:v0.0.5
     environment:
       - PIP_REQUIREMENTS=task_dispenser@git+https://github.com/blopser/task_dispenser
     command: >
       task-dispenser start
       -t q1 print
-      -t q2 task_dispenser.utils:failed_task
       -t q3 examples/simple_task.py:task_func
-      --redis-start --procs-number 2 --on-error=log --batch-size=3 --log-level=debug
+      --procs-number 1 --on-error=log --batch-size=3 --log-level=debug
+      --redis-port 6379 --redis-pass pass
+      --redis-host redis
     volumes:
       - $PWD/example_venv:/home/user/app/venv
       - $PWD/examples:/home/user/app/examples
+    depends_on: ['redis']
     x-podman.uidmaps: ["0:1:1", "${UID:-1000}:0:1"]
     x-podman.gidmaps: ["0:1:1", "${UID:-1000}:0:1"]
 

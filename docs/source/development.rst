@@ -1,8 +1,10 @@
 Development build
 =================
 
-1) start development container, install library in editable mode and run tests::
+Start development container, install library in editable mode and run tests:
 
-  $ make start
-  $ python -m pip install -e .[dev]
-  $ /bin/bash ./scripts/test.sh
+.. code-block:: console
+
+   $ make start
+   $ python -m pip install -e .[dev]
+   $ /bin/bash ./scripts/test.sh

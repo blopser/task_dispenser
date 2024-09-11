@@ -6,6 +6,8 @@ services:
       dockerfile: ./Dockerfile
       args:
         - SYS_REQUIREMENTS=curl redis make
+    environment:
+      - PIP_REQUIREMENTS=.[dev]
     volumes:
       - $PWD/var/home:/home/user
       - $PWD/:/home/user/app

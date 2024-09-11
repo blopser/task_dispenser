@@ -13,7 +13,7 @@ dev = [
     "pytest-cov",
     "pytest-mypy",
     "pytest-pylint",
-    "sphinx",
+    "sphinx<7.0.0",
     "sphinx-autodoc-typehints",
     "sphinx-rtd-theme",
     "sphinx-argparse",

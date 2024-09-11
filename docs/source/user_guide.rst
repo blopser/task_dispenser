@@ -21,7 +21,6 @@ Start dispenser with three queues `q1`, `q2`, `q3`:
 Run redis server automatically using default address.
 
 .. code-block:: console
-   :linenos:
 
    $ task-dispenser start \
        -t q1 print \
@@ -32,9 +31,11 @@ Run redis server automatically using default address.
 Then add task with `args=(1,)` to queue `q1` and task with `args=(2,)` to queue `q2` 5 times using default redis address:
 
 .. code-block:: console
-   :linenos:
 
    $ task-dispenser add -t q1 1 -t q2 2 -t q3 3 -n 5 --log-level=debug
+
+From code
+---------
 
 The same results can be achieved using following code:
 
@@ -72,4 +73,17 @@ Client:
    client = DispenserClient()
    client.add(qname='q1', task_args=(1,))
 
+Docker
+------
 
+You can use docker or docker-compose, so redis server can be started as separate service:
+
+.. literalinclude:: ../../docker-compose.yml
+   :language: yaml
+
+.. code-block:: console
+   
+   $ docker run --net=host --rm --name=task_dispenser \
+       ghcr.io/blopser/task_dispenser task-dispenser \
+       add -t q1 1 -t q3 3 -n 5 \
+       --log-level=debug --redis-host=localhost --redis-pass pass --redis-port=6379                                 
