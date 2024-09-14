@@ -45,6 +45,6 @@ COPY --chown=$USER_ID:$GROUP_ID ./pyproject.toml /home/$UNAME/task_dispenser/pyp
 RUN set -ex \
     && python -m venv $VIRTUAL_ENV \
     && $VIRTUAL_ENV/bin/python -m pip install $HOME/task_dispenser celery \
-    && rm -rf /home/$UNAME/task_dispenser \
+    && rm -rf /home/$UNAME/task_dispenser
 
 ENTRYPOINT ["/bin/bash", "/etc/start.sh"]
